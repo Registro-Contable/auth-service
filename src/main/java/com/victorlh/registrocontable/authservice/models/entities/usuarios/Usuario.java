@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "usuarios", schema = "users")
 public class Usuario {
 
 	@Id
@@ -25,7 +25,7 @@ public class Usuario {
 	@Column(unique = true, length = 100)
 	private String uid;
 
-	@Column(length = 60)
+	@Column(length = 100)
 	private String password;
 	private boolean enabled;
 	private String nombre;

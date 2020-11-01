@@ -24,7 +24,7 @@ public class ApiClient {
 	@Column(name = "client_id", unique = true)
 	private String clientId;
 
-	@Column(name = "client_secret", unique = true)
+	@Column(name = "client_secret")
 	private String clientSecret;
 
 	@Column

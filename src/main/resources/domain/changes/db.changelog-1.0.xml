@@ -5,20 +5,98 @@
 	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
-	
-	<changeSet author="victorlh" id="20201101-001">
-		<createTable tableName="person">
-			<column autoIncrement="true" name="id" type="INT">
+
+	<changeSet author="victorlh" id="20201101-002">
+		<createTable tableName="roles" schemaName="users">
+			<column autoIncrement="true" name="id" type="SERIAL">
 				<constraints primaryKey="true" />
 			</column>
-			<column name="name" type="VARCHAR(255)">
-				<constraints nullable="false" />
+			<column name="nombre" type="VARCHAR(30)">
+				<constraints nullable="false" unique="true" />
 			</column>
-			<column name="address" type="VARCHAR(255)" />
 		</createTable>
 		<rollback>
-			<dropTable tableName="person" />
+			<dropTable tableName="roles" />
 		</rollback>
 	</changeSet>
-	
+
+	<changeSet author="victorlh" id="20201101-003">
+		<createTable tableName="usuarios" schemaName="users">
+			<column autoIncrement="true" name="id" type="SERIAL">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="uid" type="VARCHAR(100)">
+				<constraints nullable="false" unique="true" />
+			</column>
+			<column name="password" type="VARCHAR(100)" />
+			<column name="enabled" type="BOOLEAN" defaultValue="true" />
+			<column name="nombre" type="VARCHAR" />
+			<column name="apellidos" type="VARCHAR" />
+			<column name="email" type="VARCHAR">
+				<constraints nullable="false" unique="true" />
+			</column>
+		</createTable>
+		<rollback>
+			<dropTable tableName="usuarios" />
+		</rollback>
+	</changeSet>
+
+	<changeSet author="victorlh" id="20201101-004">
+		<createTable tableName="usuarios_roles" schemaName="users">
+			<column autoIncrement="true" name="id" type="SERIAL">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="usuario_id" type="INT">
+				<constraints nullable="false"
+					foreignKeyName="fk_usuarios_roles_usuario"
+					references="users.usuarios(id)" />
+			</column>
+			<column name="role_id" type="INT">
+				<constraints nullable="false"
+					foreignKeyName="fk_usuarios_roles_roles"
+					references="users.roles(id)" />
+			</column>
+		</createTable>
+		<addUniqueConstraint
+			columnNames="usuario_id, role_id" constraintName="uk_usuarios_roles"
+			schemaName="users" tableName="usuarios_roles" />
+		<rollback>
+			<dropTable tableName="usuarios_roles" />
+		</rollback>
+	</changeSet>
+
+	<changeSet author="victorlh" id="20201101-005">
+		<createTable tableName="api_clients" schemaName="users">
+			<column autoIncrement="true" name="id" type="SERIAL">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="client_id" type="VARCHAR">
+				<constraints nullable="false" unique="true" />
+			</column>
+			<column name="client_secret" type="VARCHAR" />
+			<column name="nombre" type="VARCHAR" />
+		</createTable>
+		<rollback>
+			<dropTable tableName="usuarios" />
+		</rollback>
+	</changeSet>
+
+	<changeSet author="victorlh" id="20201101-006">
+		<createTable tableName="api_clients_scopes"
+			schemaName="users">
+			<column autoIncrement="true" name="id" type="SERIAL">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="scope" type="VARCHAR" />
+			<column name="client_secret" type="VARCHAR" />
+			<column name="api_clients_id" type="INT">
+				<constraints nullable="false"
+					foreignKeyName="fk_api_clients_scopes_api_clients"
+					references="users.api_clients(id)" />
+			</column>
+		</createTable>
+		<rollback>
+			<dropTable tableName="usuarios" />
+		</rollback>
+	</changeSet>
 </databaseChangeLog>
