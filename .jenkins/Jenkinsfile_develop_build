@@ -23,6 +23,10 @@ pipeline {
         stage('pre-run') {
             steps {
                 cleanWs()
+            }
+        }
+        stage('test') {
+            steps {
                 configFileProvider([configFile(fileId: 'liquibase-dev', variable: 'LIQUIBASE_PROPERTIES')]) {
                     sh "cat ${LIQUIBASE_PROPERTIES}"
                 }
