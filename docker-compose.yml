@@ -1,9 +1,15 @@
 version: "3"
 
+networks:
+  registrocontable-net:
+    external: true
+
 services:
   cloud-config-server:
     image: "registro-contable/auth-service:${TAG}"
     container_name: auth-service
+    networks:
+      - registrocontable-net
     environment:
       - spring.cloud.config.profile=development
       - spring.cloud.config.uri=http://192.168.1.5:8888
