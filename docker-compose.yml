@@ -5,7 +5,7 @@ networks:
     external: true
 
 services:
-  cloud-config-server:
+  auth-service:
     image: "registro-contable/auth-service:${TAG}"
     container_name: auth-service
     networks:
