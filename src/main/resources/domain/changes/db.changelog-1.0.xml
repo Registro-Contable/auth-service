@@ -99,4 +99,8 @@
 			<dropTable tableName="usuarios" />
 		</rollback>
 	</changeSet>
+	
+	<changeSet author="victorlh" id="20201101-007">
+		<dropColumn tableName="api_clients_scopes" schemaName="users" columnName="client_secret"/>
+	</changeSet>
 </databaseChangeLog>
