@@ -11,16 +11,17 @@ import org.springframework.security.oauth2.provider.ClientRegistrationException;
 import org.springframework.security.oauth2.provider.client.BaseClientDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service("ApiClientServiceImpl")
 public class ApiClientServiceImpl implements ClientDetailsService {
 
+	private static final String[] AUTHORIZED_GRANT_TYPES = {"password", "refresh_token"};
+
 	private final ApiClientRepository apiClientRepository;
 
-	@Value("${registrocontable.auth.authorizedGrantTypes}")
-	private List<String> authorizedGrantTypes;
 	@Value("${registrocontable.auth.accessTokenValidity}")
 	private Integer accessTokenValidity;
 	@Value("${registrocontable.auth.refreshTokenValidity}")
@@ -40,7 +41,7 @@ public class ApiClientServiceImpl implements ClientDetailsService {
 		baseClientDetails.setClientId(clientId);
 		baseClientDetails.setClientSecret(apiClientEntity.getClientSecret());
 		baseClientDetails.setScope(scopes);
-		baseClientDetails.setAuthorizedGrantTypes(authorizedGrantTypes);
+		baseClientDetails.setAuthorizedGrantTypes(Arrays.asList(AUTHORIZED_GRANT_TYPES));
 		baseClientDetails.setAccessTokenValiditySeconds(accessTokenValidity);
 		baseClientDetails.setRefreshTokenValiditySeconds(refreshTokenValidity);
 
