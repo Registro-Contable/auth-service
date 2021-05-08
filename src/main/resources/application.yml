@@ -1,2 +1,32 @@
+spring:
+  application:
+    name: auth-service
+  jpa:
+    database: POSTGRESQL
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://192.168.1.5:5432/users
+    username: victor
+    password: victorlh
+    driver-class-name: org.postgresql.Driver
+
 server:
-  port: ${PORT:0}
+  port: 8081
+
+security:
+  oauth2:
+    client:
+      client-id: clientId
+      client-secret: $2y$12$7r26vjQpeK339hE1EnvJpu8jYPaADVB.QNUUVRyRRc9S5cQlsHLZ.
+      scopes:
+        - all
+
+config:
+  security:
+    oauth:
+      jwt:
+        key: abniuft238iq7rgbq73862rt
+
+#logging:
+#  level:
+#    ROOT: DEBUG

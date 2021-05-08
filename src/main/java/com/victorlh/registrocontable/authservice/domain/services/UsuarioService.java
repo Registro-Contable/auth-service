@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface UsuarioService extends UserDetailsService {
 
@@ -13,11 +14,11 @@ public interface UsuarioService extends UserDetailsService {
 
 	Optional<UsuarioEntity> findById(long id);
 
-	Optional<UsuarioEntity> findByUid(String uid);
+	Optional<UsuarioEntity> findByUUID(UUID uuid);
 
 	Optional<UsuarioEntity> findByEmail(String email);
 
 	void persist(UsuarioEntity usuarioEntity);
 
-	Optional<RoleEntity> findRoleByName(String name);
+	Optional<RoleEntity> findRoleByName(String role);
 }

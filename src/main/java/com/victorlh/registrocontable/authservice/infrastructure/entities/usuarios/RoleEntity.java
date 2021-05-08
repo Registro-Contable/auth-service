@@ -1,37 +1,31 @@
 package com.victorlh.registrocontable.authservice.infrastructure.entities.usuarios;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.victorlh.registrocontable.authservice.infrastructure.entities.enums.StatusDB;
+import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 
+import javax.persistence.*;
+import java.util.Date;
+
+@Data
 @Entity
-@Table(name = "roles", schema = "users")
+@Table(name = "roles")
 public class RoleEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(unique = true, length = 30)
-	private String nombre;
+	@Column(name = "role", length = 50)
+	private String role;
 
-	public Long getId() {
-		return id;
-	}
+	@Column(name = "created_at")
+	@Temporal(TemporalType.TIMESTAMP)
+	@CreationTimestamp
+	private Date createAt;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status")
+	private StatusDB status;
 
 }

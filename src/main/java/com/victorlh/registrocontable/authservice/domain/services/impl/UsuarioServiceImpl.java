@@ -13,15 +13,19 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
 
-	@Autowired
-	private UsuarioRepository usuarioRepository;
+	private final UsuarioRepository usuarioRepository;
+	private final RoleRepository roleRepository;
 
 	@Autowired
-	private RoleRepository roleRepository;
+	public UsuarioServiceImpl(UsuarioRepository usuarioRepository, RoleRepository roleRepository) {
+		this.usuarioRepository = usuarioRepository;
+		this.roleRepository = roleRepository;
+	}
 
 	@Override
 	public List<UsuarioEntity> findAll() {
@@ -34,15 +38,13 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 
 	@Override
-	public Optional<UsuarioEntity> findByUid(String uid) {
-		UsuarioEntity usuarioEntity = usuarioRepository.findByUid(uid);
-		return Optional.ofNullable(usuarioEntity);
+	public Optional<UsuarioEntity> findByUUID(UUID uuid) {
+		return usuarioRepository.findByUUID(uuid);
 	}
 
 	@Override
 	public Optional<UsuarioEntity> findByEmail(String email) {
-		UsuarioEntity usuarioEntity = usuarioRepository.findByEmail(email);
-		return Optional.ofNullable(usuarioEntity);
+		return usuarioRepository.findByEmail(email);
 	}
 
 	@Override
@@ -58,9 +60,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 
 	@Override
-	public Optional<RoleEntity> findRoleByName(String name) {
-		RoleEntity roleEntity = roleRepository.findByNombre(name);
-		return Optional.ofNullable(roleEntity);
+	public Optional<RoleEntity> findRoleByName(String role) {
+		return roleRepository.findByRole(role);
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.victorlh.registrocontable.authservice.domain.model;
 
+import com.victorlh.registrocontable.authservice.infrastructure.entities.enums.StatusDB;
 import com.victorlh.registrocontable.authservice.infrastructure.entities.usuarios.UsuarioEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -8,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.io.Serial;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class UserDetailsImpl implements UserDetails {
@@ -19,7 +21,7 @@ public class UserDetailsImpl implements UserDetails {
 
 	public UserDetailsImpl(UsuarioEntity usuarioEntity) {
 		this.usuarioEntity = usuarioEntity;
-		this.authorities = usuarioEntity.getRoles().stream().map(r -> new SimpleGrantedAuthority(r.getNombre())).collect(Collectors.toList());
+		this.authorities = usuarioEntity.getRoles().stream().map(r -> new SimpleGrantedAuthority(r.getRole())).collect(Collectors.toList());
 	}
 
 	@Override
@@ -54,7 +56,7 @@ public class UserDetailsImpl implements UserDetails {
 
 	@Override
 	public boolean isEnabled() {
-		return usuarioEntity.getEnabled();
+		return usuarioEntity.getStatus() == StatusDB.ACTIVATED;
 	}
 
 	public String getNombre() {
@@ -65,8 +67,8 @@ public class UserDetailsImpl implements UserDetails {
 		return usuarioEntity.getApellidos();
 	}
 
-	public String getUid() {
-		return usuarioEntity.getUid();
+	public UUID getUUID() {
+		return usuarioEntity.getUuid();
 	}
 
 }

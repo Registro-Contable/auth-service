@@ -21,8 +21,8 @@ public class InfoAdicionalToken implements TokenEnhancer {
 		if (principal instanceof UserDetailsImpl) {
 			UserDetailsImpl user = (UserDetailsImpl) principal;
 
-			additionalInfo.put("sub", user.getUid());
-			additionalInfo.put("name", user.getNombre());
+			additionalInfo.put("sub", user.getUUID().toString());
+			additionalInfo.put("given_name", user.getNombre());
 			additionalInfo.put("family_name", user.getApellidos());
 		}
 
