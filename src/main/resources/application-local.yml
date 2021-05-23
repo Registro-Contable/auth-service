@@ -1,0 +1,19 @@
+spring:
+  jpa:
+    database: POSTGRESQL
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://192.168.1.5:5432/users
+    username: victor
+    password: victorlh
+    driver-class-name: org.postgresql.Driver
+
+config:
+  security:
+    oauth:
+      jwt:
+        key: abniuft238iq7rgbq73862rt
+
+#logging:
+#  level:
+#    ROOT: DEBUG

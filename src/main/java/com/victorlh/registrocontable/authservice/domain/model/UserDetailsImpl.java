@@ -1,7 +1,7 @@
 package com.victorlh.registrocontable.authservice.domain.model;
 
-import com.victorlh.registrocontable.authservice.infrastructure.entities.enums.StatusDB;
-import com.victorlh.registrocontable.authservice.infrastructure.entities.usuarios.UsuarioEntity;
+import com.victorlh.registrocontable.commons.users.domain.model.enums.Status;
+import com.victorlh.registrocontable.commons.users.domain.model.users.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,12 +16,15 @@ public class UserDetailsImpl implements UserDetails {
 	@Serial
 	private static final long serialVersionUID = 6944468940675665342L;
 
-	private final UsuarioEntity usuarioEntity;
+	private final User user;
 	private final List<GrantedAuthority> authorities;
 
-	public UserDetailsImpl(UsuarioEntity usuarioEntity) {
-		this.usuarioEntity = usuarioEntity;
-		this.authorities = usuarioEntity.getRoles().stream().map(r -> new SimpleGrantedAuthority(r.getRole())).collect(Collectors.toList());
+	public UserDetailsImpl(User user) {
+		this.user = user;
+		this.authorities = user.getRoles().stream()
+				.filter(r -> r.getStatus() == Status.ACTIVATED)
+				.map(r -> new SimpleGrantedAuthority(r.getRole()))
+				.collect(Collectors.toList());
 	}
 
 	@Override
@@ -31,12 +34,12 @@ public class UserDetailsImpl implements UserDetails {
 
 	@Override
 	public String getPassword() {
-		return usuarioEntity.getPassword();
+		return user.getPassword();
 	}
 
 	@Override
 	public String getUsername() {
-		return usuarioEntity.getEmail();
+		return user.getEmail();
 	}
 
 	@Override
@@ -56,19 +59,19 @@ public class UserDetailsImpl implements UserDetails {
 
 	@Override
 	public boolean isEnabled() {
-		return usuarioEntity.getStatus() == StatusDB.ACTIVATED;
+		return user.getStatus() == Status.ACTIVATED;
 	}
 
 	public String getNombre() {
-		return usuarioEntity.getNombre();
+		return user.getNombre();
 	}
 
 	public String getApellidos() {
-		return usuarioEntity.getApellidos();
+		return user.getApellidos();
 	}
 
 	public UUID getUUID() {
-		return usuarioEntity.getUuid();
+		return user.getUuid();
 	}
 
 }
