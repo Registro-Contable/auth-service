@@ -76,4 +76,17 @@
 		<url>https://github.com/${git.repository}</url>
 	</scm>
 
+	<repositories>
+		<repository>
+			<id>artifact-registry</id>
+			<url>artifactregistry://europe-west2-maven.pkg.dev/registro-contable-cloud/registro-contable-ms</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
 </project>
