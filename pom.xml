@@ -2,91 +2,98 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>com.victorlh.registrocontable</groupId>
-		<artifactId>registro-contable-parent</artifactId>
-		<version>0.1.0-SNAPSHOT</version>
-	</parent>
+    <parent>
+        <groupId>com.victorlh.registrocontable</groupId>
+        <artifactId>registro-contable-parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
 
-	<artifactId>auth-service</artifactId>
-	<version>0.2.0-SNAPSHOT</version>
+    <artifactId>auth-service</artifactId>
+    <version>0.2.0-SNAPSHOT</version>
 
-	<name>Auth Service</name>
-	<description>Servicio de gestion de autenticación y seguridad</description>
+    <name>Auth Service</name>
+    <description>Servicio de gestion de autenticación y seguridad</description>
 
-	<properties>
-		<git.repository>Registro-Contable/auth-service</git.repository>
-		<docker.repository>eu.gcr.io/registro-contable-cloud/com.victorlh.registrocontable/auth-service</docker.repository>
-	</properties>
+    <properties>
+        <git.repository>Registro-Contable/auth-service</git.repository>
+        <docker.repository>eu.gcr.io/registro-contable-cloud/com.victorlh.registrocontable/auth-service</docker.repository>
+    </properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>com.victorlh.registrocontable.commons</groupId>
-			<artifactId>commons-users</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security.oauth.boot</groupId>
-			<artifactId>spring-security-oauth2-autoconfigure</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-jwt</artifactId>
-			<version>1.1.1.RELEASE</version>
-		</dependency>
+    <dependencies>
+        <dependency>
+            <groupId>com.victorlh.registrocontable.commons</groupId>
+            <artifactId>commons-users</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security.oauth.boot</groupId>
+            <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-jwt</artifactId>
+            <version>1.1.1.RELEASE</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-			<optional>true</optional>
-		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>com.google.cloud.tools</groupId>
-				<artifactId>jib-maven-plugin</artifactId>
-				<version>3.0.0</version>
-				<configuration>
-					<from>
-						<image>adoptopenjdk:14-jre</image>
-					</from>
-					<to>
-						<image>${docker.repository}:${project.version}</image>
-					</to>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <from>
+                        <image>adoptopenjdk:14-jre</image>
+                    </from>
+                    <to>
+                        <image>${docker.repository}:${project.version}</image>
+                    </to>
+                </configuration>
+            </plugin>
+        </plugins>
+        <extensions>
+            <extension>
+                <groupId>com.google.cloud.artifactregistry</groupId>
+                <artifactId>artifactregistry-maven-wagon</artifactId>
+                <version>2.1.1</version>
+            </extension>
+        </extensions>
+    </build>
 
-	<scm>
-		<connection>scm:git:https://github.com/${git.repository}.git</connection>
-		<developerConnection>scm:git:https://github.com/${git.repository}.git</developerConnection>
-		<url>https://github.com/${git.repository}</url>
-	</scm>
+    <scm>
+        <connection>scm:git:https://github.com/${git.repository}.git</connection>
+        <developerConnection>scm:git:https://github.com/${git.repository}.git</developerConnection>
+        <url>https://github.com/${git.repository}</url>
+    </scm>
 
-	<repositories>
-		<repository>
-			<id>artifact-registry</id>
-			<url>artifactregistry://europe-west2-maven.pkg.dev/registro-contable-cloud/registro-contable-ms</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
+    <repositories>
+        <repository>
+            <id>artifact-registry</id>
+            <url>artifactregistry://europe-west2-maven.pkg.dev/registro-contable-cloud/registro-contable-ms</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
 </project>
