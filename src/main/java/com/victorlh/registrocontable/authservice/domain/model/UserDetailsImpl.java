@@ -22,8 +22,7 @@ public class UserDetailsImpl implements UserDetails {
 	public UserDetailsImpl(User user) {
 		this.user = user;
 		this.authorities = user.getRoles().stream()
-				.filter(r -> r.getStatus() == Status.ACTIVATED)
-				.map(r -> new SimpleGrantedAuthority(r.getRole()))
+				.map(SimpleGrantedAuthority::new)
 				.collect(Collectors.toList());
 	}
 

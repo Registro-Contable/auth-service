@@ -1,7 +1,6 @@
 package com.victorlh.registrocontable.authservice.domain.services;
 
 import com.victorlh.registrocontable.commons.users.domain.model.apiclients.ApiClient;
-import com.victorlh.registrocontable.commons.users.domain.model.apiclients.ApiScope;
 import com.victorlh.registrocontable.commons.users.domain.model.enums.Status;
 import com.victorlh.registrocontable.commons.users.domain.services.apiclients.ApiClientsService;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service("ApiClientServiceImpl")
@@ -42,10 +40,7 @@ public class ApiClientServiceImpl implements ClientDetailsService {
 	}
 
 	private static BaseClientDetails convert(ApiClient apiClient) {
-		List<String> scopes = apiClient.getScopes().stream()
-				.filter(s -> s.getStatus() == Status.ACTIVATED)
-				.map(ApiScope::getScope)
-				.collect(Collectors.toList());
+		List<String> scopes = apiClient.getScopes();
 		Integer accessTokenValidity = apiClient.getAccessTokenValidity();
 		Integer refreshTokenValidity = apiClient.getRefreshTokenValidity();
 
